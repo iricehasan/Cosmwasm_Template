@@ -3,7 +3,7 @@ use cosmwasm_std::{
 };
 
 // Contract Logic
-use contract::query;
+use contract::{exec, query};
 
 // State variables
 use state::COUNTER;
@@ -38,8 +38,8 @@ pub fn execute(
 ) -> StdResult<Response> {
     match msg {
         // Call functions from the exec module depending on the message received
-        ExecuteMsg::Increment {} => todo!(),
-        ExecuteMsg::Reset { value } => todo!(),
+        ExecuteMsg::Increment {} => exec::increment(deps, info),
+        ExecuteMsg::Reset { value } => exec::reset(deps, info, value),
     }
 }
 
