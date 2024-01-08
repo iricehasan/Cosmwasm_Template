@@ -1,6 +1,6 @@
 pub mod exec {
-    use crate::state::COUNTER;
-    use cosmwasm_std::{DepsMut, MessageInfo, Response, StdResult};
+    use crate::state::{COUNTER, OWNER};
+    use cosmwasm_std::{DepsMut, MessageInfo, Response, StdResult, StdError};
 
     pub fn increment(deps: DepsMut, info: MessageInfo) -> StdResult<Response> {
         // load the counter from the storage and increment it by one
@@ -24,6 +24,12 @@ pub mod exec {
     }
 
     pub fn reset(deps: DepsMut, info: MessageInfo, counter_value: u64) -> StdResult<Response> {
+
+        let owner = OWNER.load(deps.storage)?;
+
+        if owner != info.sender {
+            return Err(StdError::generic_err("Only the owner can reset!"));
+        }
         // save the counter
         COUNTER.save(deps.storage, &counter_value)?;
 

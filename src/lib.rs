@@ -6,7 +6,7 @@ use cosmwasm_std::{
 use contract::{exec, query};
 
 // State variables
-use state::COUNTER;
+use state::{COUNTER, OWNER};
 
 // Messages
 use msg::{ExecuteMsg, InstantiateMsg, QueryMsg};
@@ -21,10 +21,11 @@ mod state;
 pub fn instantiate(
     deps: DepsMut,
     _env: Env,
-    _info: MessageInfo,
+    info: MessageInfo,
     msg: InstantiateMsg,
 ) -> StdResult<Response> {
     COUNTER.save(deps.storage, &msg.counter_value)?;
+    OWNER.save(deps.storage, &info.sender)?;
 
     Ok(Response::new())
 }
