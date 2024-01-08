@@ -40,6 +40,7 @@ pub fn execute(
         // Call functions from the exec module depending on the message received
         ExecuteMsg::Increment {} => exec::increment(deps, info),
         ExecuteMsg::Reset { value } => exec::reset(deps, info, value),
+        ExecuteMsg::Decrement {} => exec::decrement(deps, info),
     }
 }
 

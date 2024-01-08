@@ -9,6 +9,7 @@ pub struct InstantiateMsg {
 pub enum ExecuteMsg {
     Increment {},
     Reset { value: u64 },
+    Decrement {},
 }
 
 #[cw_serde]
